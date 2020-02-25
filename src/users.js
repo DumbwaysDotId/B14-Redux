@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 //Import Action
 import {getUsers}  from './_actions/usersA';
@@ -10,13 +8,14 @@ import {getUsers}  from './_actions/usersA';
 
 class Users extends Component{
 
- componentWillMount(){
+ componentDidMount(){
      this.props.getUsers();
  }
   
   render(){
-      const {data, loading, error} = this.props.users;
-      if (loading) {
+      const {data, isLoading, error} = this.props.users;
+
+      if (isLoading) {
         return (
           <div className="App-header  ">
               <h1>Data Users</h1>

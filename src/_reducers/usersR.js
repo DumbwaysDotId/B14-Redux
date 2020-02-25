@@ -21,7 +21,7 @@ const users = (state = initialState, action) => {
             case 'GET_USERS_REJECTED':
             return {
                 ...state,
-                loading: false,
+                isLoading: false,
                 error: true
             }
 
