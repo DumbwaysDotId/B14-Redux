@@ -1,67 +1,45 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux';
 
-import { createStore } from 'redux';
-
-//Make Action
-const actionINC = () => {
-  return {
-    type: 'INCREMENT',
-    payload: null,
-  }
-}
-
-const actionDEC = () => {
-  return {
-    type: 'DECREMENT',
-    payload: null
-  }
-}
-
-
-//Init Reducer
-const initialState = {
-  number: 0,
-}
-
-function counter(state = initialState, action){
-  switch (action.type) {
-    case 'INCREMENT':
-      return {
-        number: state.number + 1
-      }
-
-      case 'DECREMENT':
-        return {
-          number: state.number - 1
-        }
-      
-      default:
-        return state
-  }
-}
-
-
-//Store
-let store = createStore(counter)
-
-store.subscribe(() => {
-  console.log(store.getState().number)
-})
-
+//Import Action
+import {actionINC}  from './_actions/incrementA';
+import  {actionDEC}  from './_actions/decrementA';
+import decrementR from './_reducers/decrementR';
 
 class App extends Component{
+
+  
   render(){
     return(
       <div className="App-header  ">
         <h1>COUNTER</h1>
-        <button onClick={() => store.dispatch(actionINC())}>INC</button>
+        
+        <h1>{this.props.incrementR.number}</h1>
+        <h1>{this.props.decrementR.number}</h1>
+
+        <button onClick={() => this.props.dispatch(actionINC())}>INC</button>
         <br></br>
-        <button onClick={() => store.dispatch(actionDEC())}>DEC</button>
+        <button onClick={() => this.props.dispatch(actionDEC())}>DEC</button>
       </div>
     )
   }
 }
 
-export default App;
+const mapStateToProp = (state)=>{
+  return{
+    incrementR: state.incrementR,
+    decrementR: state.decrementR
+  }
+}
+
+// const mapDispatchToProp = (dispatch) => {
+//   return{
+//     actionINC: () => dispatch.actionINC({
+//       type: 'INCREMENT'
+//     })
+//   }
+// }
+
+export default connect(mapStateToProp)(App);
